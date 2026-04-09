@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 import time
 from pathlib import Path
@@ -21,9 +22,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--mode",
-        choices=("console", "ui"),
+        choices=("console", "ui", "web"),
         default="console",
-        help="Choose console output or the Tkinter dashboard.",
+        help="Choose console output, the Tkinter dashboard, or the Render-friendly web app.",
     )
     parser.add_argument(
         "--cycles",
@@ -70,6 +71,12 @@ def main() -> None:
 
     if args.mode == "ui":
         run_dashboard(seed=args.seed)
+        return
+
+    if args.mode == "web":
+        from autosort.web_app import run_web_app
+
+        run_web_app(seed=args.seed, host="0.0.0.0", port=int(os.environ.get("PORT", "10000")))
         return
 
     run_console(cycles=args.cycles, delay=args.delay, seed=args.seed)

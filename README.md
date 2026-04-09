@@ -54,6 +54,14 @@ python main.py --mode console --cycles 18
 python main.py --mode ui
 ```
 
+### Web simulation for Render or browser demos
+
+```bash
+python main.py --mode web
+```
+
+Then open `http://localhost:10000` in your browser.
+
 ### Interactive demo controls in the UI
 
 - **Inject Package**: add a package directly by destination (`X`, `Y`, `Z`, or `Q`)
@@ -98,6 +106,21 @@ AutoSort Control System/
 ## Documentation
 
 - `docs/PLC_DESIGN.md` — PLC I/O map, ladder-style logic, and state machine notes
+
+## Render deployment
+
+This repository now includes `render.yaml` for a simple Render web service deployment.
+
+### Deploy on Render
+
+1. Push the repo to GitHub
+2. In Render, create a **Blueprint** or **Web Service** from the repo
+3. Render will use:
+   - **Build command:** `pip install -r requirements.txt`
+   - **Start command:** `gunicorn wsgi:app --bind 0.0.0.0:$PORT`
+4. Open the deployed URL to use the web dashboard
+
+> Use `web` mode for cloud deployment. `ui` mode is desktop-only and will not run on Render.
 
 ## Verification
 
